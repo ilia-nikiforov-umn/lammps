@@ -22,9 +22,6 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y libcurl4-openssl-dev
 
-    - name: Create Build Environment
-      run: mkdir Build
-
     - name: Building LAMMPS via CMake
       shell: bash
       run: |
@@ -45,6 +42,7 @@ jobs:
       working-directory: build
       shell: bash
       run: |
+        source ../linuxenv/bin/activate
         source kim_build-prefix/bin/kim-api-activate
         kim-api-collections-management install user EAM_Dynamo_MendelevAckland_2007v3_Zr__MO_004835508849_001
         kim-api-collections-management install user EAM_Dynamo_ErcolessiAdams_1994_Al__MO_123629422045_006
