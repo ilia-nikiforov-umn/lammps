@@ -1,0 +1,50 @@
+# GitHub action to build LAMMPS with KIM package and run KIM unit test
+name: "Unittest with KIM"
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, ubuntu-22.04-arm]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+
+    - name: Install extra packages
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libcurl4-openssl-dev
+
+    - name: Create Build Environment
+      run: mkdir Build
+
+    - name: Building LAMMPS via CMake
+      shell: bash
+      run: |
+        python3 -m venv linuxenv
+        source linuxenv/bin/activate
+        cmake -S cmake -B build \
+              -D BUILD_SHARED_LIBS=on \
+              -D DOWNLOAD_POTENTIALS=off \
+              -D ENABLE_TESTING=on \
+              -D PKG_KIM=on \
+              -D DOWNLOAD_KIM=on \
+              -D KIM_EXTRA_UNITTESTS=on \
+              -D PKG_PYTHON=on
+        cmake --build -j4 build
+
+    - name: Run Tests
+      working-directory: build
+      shell: bash
+      run: |
+        source kim_build-prefix/bin/kim-api-activate
+        kim-api-collections-management install user EAM_Dynamo_MendelevAckland_2007v3_Zr__MO_004835508849_001
+        kim-api-collections-management install user EAM_Dynamo_ErcolessiAdams_1994_Al__MO_123629422045_006
+        ctest -R KimCommands
