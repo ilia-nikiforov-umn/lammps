@@ -25,9 +25,6 @@ jobs:
     - name: Building LAMMPS via CMake
       shell: bash
       run: |
-        python3 -m venv linuxenv
-        source linuxenv/bin/activate        
-        python3 -m pip install kim-property
         cmake -S cmake -B build \
               -D BUILD_SHARED_LIBS=on \
               -D DOWNLOAD_POTENTIALS=off \
@@ -41,9 +38,9 @@ jobs:
     - name: Run Tests
       working-directory: build
       shell: bash
-      run: |
-        source ../linuxenv/bin/activate
+      run: |        
         source kim_build-prefix/bin/kim-api-activate
         kim-api-collections-management install user EAM_Dynamo_MendelevAckland_2007v3_Zr__MO_004835508849_001
         kim-api-collections-management install user EAM_Dynamo_ErcolessiAdams_1994_Al__MO_123629422045_006
+        python3 -m pip install kim-property --break-system-packages
         ctest -R KimCommands --output-on-failure
