@@ -38,7 +38,7 @@ jobs:
               -D DOWNLOAD_KIM=on \
               -D KIM_EXTRA_UNITTESTS=on \
               -D PKG_PYTHON=on
-        cmake --build -j4 build
+        cmake --build build -j4
 
     - name: Run Tests
       working-directory: build
