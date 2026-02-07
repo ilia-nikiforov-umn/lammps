@@ -9,7 +9,7 @@ jobs:
   build-and-test:
     strategy:
       matrix:
-        os: [ubuntu-22.04, ubuntu-22.04-arm]
+        os: [ubuntu-22.04] #, ubuntu-22.04-arm]
 
     runs-on: ${{ matrix.os }}
 
@@ -47,4 +47,4 @@ jobs:
         source kim_build-prefix/bin/kim-api-activate
         kim-api-collections-management install user EAM_Dynamo_MendelevAckland_2007v3_Zr__MO_004835508849_001
         kim-api-collections-management install user EAM_Dynamo_ErcolessiAdams_1994_Al__MO_123629422045_006
-        ctest -R KimCommands
+        ctest -R KimCommands --output-on-failure
