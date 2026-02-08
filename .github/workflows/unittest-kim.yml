@@ -40,8 +40,10 @@ jobs:
       shell: bash
       run: |        
         source kim_build-prefix/bin/kim-api-activate
+        kim-api-collections-management remove --force Sim_LAMMPS_LJcut_AkersonElliott_Alchemy_PbAu
         kim-api-collections-management install user EAM_Dynamo_MendelevAckland_2007v3_Zr__MO_004835508849_001
         kim-api-collections-management install user EAM_Dynamo_ErcolessiAdams_1994_Al__MO_123629422045_006
+        kim-api-collections-management install user ../Sim_LAMMPS_LJcut_AkersonElliott_Alchemy_PbAu
         python3 -m pip install kim-property
         export PYTHONPATH=`python3 -m pip show kim-property | grep Location | sed -n 's/Location: \(.*\)/\1/p'`:$PYTHONPATH
         ctest -R KimCommands --output-on-failure

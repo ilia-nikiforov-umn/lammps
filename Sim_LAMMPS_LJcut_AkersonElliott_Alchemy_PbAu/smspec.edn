@@ -1,0 +1,22 @@
+{
+  "kim-api-sm-schema-version" 1
+  "model-name" "Sim_LAMMPS_LJcut_AkersonElliott_Alchemy_PbAu"
+  "simulator-name" "LAMMPS"
+  "simulator-version" "12 Dec 2018"
+  "supported-species" "Pb Au"
+  "units" "metal"
+  "model-defn" [ "pair_style lj/cut 10.4057000"
+                 "variable alchemy_mapping index @<atom-type-sym-list>@"
+                 "variable alchemy_curr_type loop 10000"
+                 "label loop"
+                 "if \"${alchemy_mapping} == Pb\" then &"
+                 "\"pair_coeff ${alchemy_curr_type} ${alchemy_curr_type}  0.8589880  2.6014200  10.4057000\" &"
+                 "elif \"${alchemy_mapping} == Au\" &"
+                 "\"pair_coeff ${alchemy_curr_type} ${alchemy_curr_type}  2.3058000  2.4232400   9.6929800\""
+                 "next alchemy_curr_type"
+                 "next alchemy_mapping"
+                 "jump SELF loop"
+                 "variable alchemy_curr_type delete"
+                 "pair_modify mix arithmetic"
+               ]
+}
