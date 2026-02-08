@@ -170,7 +170,7 @@ TEST_F(KimCommandsTest, kim_interactions)
     TEST_FAILURE(".*ERROR: Species 'Ar' is not supported by this KIM Simulator Model.*",
                  command("kim interactions Ar"););
 
-    BEGIN_HIDE_OUTPUT();
+    // BEGIN_HIDE_OUTPUT();
     command("clear");
     command("kim init Sim_LAMMPS_LJcut_AkersonElliott_Alchemy_PbAu metal");
     command("lattice fcc 4.08");
@@ -178,7 +178,7 @@ TEST_F(KimCommandsTest, kim_interactions)
     command("create_box 1 box");
     command("create_atoms 1 box");
     command("kim interactions Au");
-    END_HIDE_OUTPUT();
+    // END_HIDE_OUTPUT();
 
     // ASSERT_EQ(lmp->output->var_kim_periodic, 1);
     // TEST_FAILURE(".*ERROR: Incompatible units for KIM Simulator Model.*",
