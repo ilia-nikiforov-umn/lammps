@@ -30,13 +30,10 @@ if(DOWNLOAD_KIM)
   include(ExternalProject)
   enable_language(C)
   enable_language(Fortran)
-  set(KIM_URL "https://s3.openkim.org/kim-api/kim-api-2.4.1.txz" CACHE STRING "URL for KIM tarball")
-  set(KIM_MD5 "2f5e9e622ebcc4dbde04326a1f104c91" CACHE STRING "MD5 checksum of KIM tarball")
+  set(KIM_URL "https://github.com/ipcamit/kim-api/archive/346a81cdf001c46eb678b31f5f75651ed3a4f533.tar.gz" CACHE STRING "URL for KIM tarball")
   mark_as_advanced(KIM_URL)
-  mark_as_advanced(KIM_MD5)
   ExternalProject_Add(kim_build
     URL     ${KIM_URL}
-    URL_MD5 ${KIM_MD5}
     BINARY_DIR build
     CMAKE_ARGS ${CMAKE_REQUEST_PIC}
                -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
